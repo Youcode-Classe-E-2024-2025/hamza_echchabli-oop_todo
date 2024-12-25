@@ -12,7 +12,7 @@ class Database {
 }
 
 
-$dsn = 'pgsql:host=localhost;port=8885;dbname=tododb2;user=postgres;password=0000;';
+$dsn = 'pgsql:host=localhost;port=8885;dbname=tododb;user=postgres;password=0000;';
 $db = new Database($dsn);
 
 
