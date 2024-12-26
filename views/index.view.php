@@ -12,7 +12,7 @@
         <h1 class="mx-auto my-7 text-4xl w-fit font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
             Kanban
         </h1>
-        
+        <button class="btn-save-tasks text-white">save</button>
         <div class="cnt min-w-[400px]  w-[96%] lg:w-[1024px]    mx-auto mt-10 mb-28  overflow-x-auto p-3">
             <div class="content flex items-start  gap-3 ">
                <div class="relative transition-all list-container mx-auto basis-72 min-w-60 bg-[#262626] rounded flex flex-col gap-5 p-3">

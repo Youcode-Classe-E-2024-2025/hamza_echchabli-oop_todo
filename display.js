@@ -115,20 +115,20 @@ function createTask(e) {
         modalElement.classList.add('hidden');
         modalElement.classList.remove('flex');
         displayTasks(tasksArrays,listElements); 
-        fetch('http://localhost:8888/controllers/tasksController.php', {
-            method: 'POST', 
-            headers: {
-              'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify({
-              ...task,
-              deadline : task.deadline.toDateString(),
-              status : arrayName
-            })
-          })
-          .then(response => response.json()) 
-          .then(data => console.log(data)) 
-          .catch(error => console.error('Error:', error)); 
+        // fetch('http://localhost:8888/controllers/tasksController.php', {
+        //     method: 'POST', 
+        //     headers: {
+        //       'Content-Type': 'application/json' 
+        //     },
+        //     body: JSON.stringify({
+        //       ...task,
+        //       deadline : task.deadline.toDateString(),
+        //       status : arrayName
+        //     })
+        //   })
+        //   .then(response => response.json()) 
+        //   .then(data => console.log(data)) 
+        //   .catch(error => console.error('Error:', error)); 
 }
 
 
@@ -334,3 +334,25 @@ function getTaskObject(id) {
 
 
 
+document.querySelector('.btn-save-tasks').addEventListener('click',e=>{
+    let tasks=[];
+    const tasksArraysCopy = JSON.parse(JSON.stringify(tasksArrays));
+    Object.entries(tasksArraysCopy).forEach(([key,val])=>{
+    val.forEach(task=>{
+        task.status = key;
+        task.deadline = new Date(task.deadline).toLocaleDateString();
+    });
+    tasks = [...tasks,...val];
+    })
+    fetch('localhost:8888/controllers/updateTasks.php',
+        {
+            method : 'POST',
+            headers : 'application/json',
+            body: JSON.stringify(tasks)
+        }
+    )
+    
+    
+    
+    
+})
