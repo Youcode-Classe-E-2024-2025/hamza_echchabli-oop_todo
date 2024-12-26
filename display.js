@@ -84,13 +84,16 @@ function hideDescription(e){
 }
 
 
-
+let arrayName;
 function showModal(e){
     e.stopPropagation();   
     if(e.target.closest('.btn-addtask')) {
-      const ArrayName = e.target.dataset.name;
-      currArray = tasksArrays[ArrayName];        
-      modalElement.firstElementChild.innerHTML = ArrayName.toUpperCase();
+
+      arrayName = e.target.dataset.name;
+      console.log(arrayName);
+      
+      currArray = tasksArrays[arrayName];        
+      modalElement.firstElementChild.innerHTML = arrayName.toUpperCase();
       modalElement.classList.remove('hidden');
       modalElement.classList.add('flex');
     }
@@ -103,7 +106,7 @@ function showDescriptionForm(e){
 
 function createTask(e) {
         e.preventDefault();
-        const task = {id:""+Date.now()+Math.trunc(Math.random()*100000),title:modalElement.querySelector(".title").value,deadline:new Date(modalElement.querySelector(".deadline").value),priority:modalElement.querySelector(".priority").value, description:""}
+        const task = {id:""+Date.now()+Math.trunc(Math.random()*100000),title: modalElement.querySelector(".title").value,deadline:new Date(modalElement.querySelector(".deadline").value),priority:modalElement.querySelector(".priority").value, description:""}
         if(task.title.length <1 || !isFinite(task.deadline.getTime())) {
             alert("enter correct data");
             return;
@@ -111,7 +114,21 @@ function createTask(e) {
         currArray.push(task);    
         modalElement.classList.add('hidden');
         modalElement.classList.remove('flex');
-        displayTasks(tasksArrays,listElements);        
+        displayTasks(tasksArrays,listElements); 
+        fetch('http://localhost:8888/controllers/tasksController.php', {
+            method: 'POST', 
+            headers: {
+              'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+              ...task,
+              deadline : task.deadline.toDateString(),
+              status : arrayName
+            })
+          })
+          .then(response => response.json()) 
+          .then(data => console.log(data)) 
+          .catch(error => console.error('Error:', error)); 
 }
 
 
@@ -212,7 +229,9 @@ draggables.forEach(draggable=>{
 
 let currBottomElement = null;
 zones.forEach(zone => {
-    const originalColor = getComputedStyle(zone).getPropertyValue('backgroundColor');
+    const originalColor = getComputedStyle(zone).backgroundColor;
+    console.log(getComputedStyle(zone).backgroundColor);
+    
     zone.addEventListener('dragover', e =>{
          e.preventDefault();
          const list = zone.querySelector('.list');
@@ -258,10 +277,9 @@ zones.forEach(zone => {
             list.append(dragged);
         }
         document.querySelectorAll('.bottom-element').forEach(el => el.classList.remove('bottom-element'));
-        currBottomElement = null;
     });
 });
-
+///////////////////////fetch
 
 function getBottom(list,mouseY){
     let offset = Number.NEGATIVE_INFINITY;

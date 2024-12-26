@@ -17,6 +17,9 @@ class TasksController {
         // $this->sendResponse(200, $tasks);
         return $tasks;
     }
+    public function addTask($title,$description,$deadline,) {
+
+    }
 
     // private function sendResponse($status, $data) {
     //     header("Content-Type: application/json");
@@ -37,6 +40,51 @@ if ($_SERVER['REQUEST_METHOD'] =='GET') {
   echo json_encode($res);
   exit;
 
+}
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $inputData = file_get_contents('php://input');
+
+    
+    $task = json_decode($inputData, true); 
+
+    
+
+    if ($task !== null) {
+       
+        $name = $task['name'] ?? 'No name provided';
+        $deadline = $task['deadline'] ?? 'No deadline provided';
+        $description = $task['description'] ?? 'No description provided';
+
+        
+        $formattedDeadline = date('Y-m-d', strtotime($deadline)); 
+        
+
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Task processed successfully',
+            'data' => [
+                'name' => $name,
+                'deadline' => $formattedDeadline,
+                'description' => $description
+            ]
+        ]);
+    } else {
+        
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Invalid JSON data'
+        ]);
+    }
+} else {
+    
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Invalid request method'
+    ]);
 }
 
 
