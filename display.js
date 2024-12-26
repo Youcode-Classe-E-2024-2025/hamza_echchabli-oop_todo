@@ -344,10 +344,12 @@ document.querySelector('.btn-save-tasks').addEventListener('click',e=>{
     });
     tasks = [...tasks,...val];
     })
-    fetch('localhost:8888/controllers/updateTasks.php',
+    fetch('http://localhost:8888/controllers/tasksController.php',
         {
             method : 'POST',
-            headers : 'application/json',
+            headers : {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(tasks)
         }
     )
