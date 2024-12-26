@@ -5,23 +5,45 @@ const draggables = document.querySelectorAll('.task');
 const zones = document.querySelectorAll('.list-container');
 const descriptionForm = document.querySelector('.description-form');
 
+
 const tasksArrays = {
-    todo: [
-        { id: 1, title: 'Task 1', deadline: new Date('2024-12-10'), priority: 0, description: 'Description for Task 1' },
-        { id: 2, title: 'Task 2', deadline: new Date('2024-11-15'), priority: 1, description: 'Description for Task 2' }
-    ],
-    doing: [
-        { id: 3, title: 'Task 3', deadline: new Date('2024-11-20'), priority: 2, description: 'Description for Task 3' }
-    ],
-    review: [
-        { id: 4, title: 'Task 4', deadline: new Date('2024-11-25'), priority: 1, description: 'Description for Task 4' }
-    ],
-    done: [
-        { id: 5, title: 'Task 5', deadline: new Date('2024-10-30'), priority: 0, description: 'Description for Task 5' }
-    ]
+    todo : [],
+    doing : [],
+    review : [],
+    done : [],
 }
+
+fetch('http://localhost:8888/controllers/tasksController.php')
+.then(response => response.json())
+.then(data =>{
+    data.forEach(task=>{
+        task.deadline = new Date(task.deadline);
+        tasksArrays[task.status].push(task);
+    })
+    console.log(tasksArrays);
+    displayTasks(tasksArrays,listElements); 
+}
+
+)
+
+// const tasksArrays = {
+//     todo: [
+//         { id: 1, title: 'Task 1', deadline: new Date('2024-12-10'), priority: 0, description: 'Description for Task 1', },
+//         { id: 2, title: 'Task 2', deadline: new Date('2024-11-15'), priority: 1, description: 'Description for Task 2', }
+//     ],
+//     doing: [
+//         { id: 3, title: 'Task 3', deadline: new Date('2024-11-20'), priority: 2, description: 'Description for Task 3', }
+//     ],
+//     review: [
+//         { id: 4, title: 'Task 4', deadline: new Date('2024-11-25'), priority: 1, description: 'Description for Task 4', }
+//     ],
+//     done: [
+//         { id: 5, title: 'Task 5', deadline: new Date('2024-10-30'), priority: 0, description: 'Description for Task 5', }
+//     ]
+// }
 let currArray = tasksArrays.todo;
 // blue #6A6DCD  purple #C340A1 red #D93535
+
 taskColors = ['red', 'orange','green' ];
 let selectedTaskElement = null;
 
@@ -81,11 +103,11 @@ function showDescriptionForm(e){
 
 function createTask(e) {
         e.preventDefault();
-        const task = {id:Date.now()+Math.trunc(Math.random()*100000),title:modalElement.querySelector(".title").value,deadline:new Date(modalElement.querySelector(".deadline").value),priority:modalElement.querySelector(".priority").value, description:""}
+        const task = {id:""+Date.now()+Math.trunc(Math.random()*100000),title:modalElement.querySelector(".title").value,deadline:new Date(modalElement.querySelector(".deadline").value),priority:modalElement.querySelector(".priority").value, description:""}
         if(task.title.length <1 || !isFinite(task.deadline.getTime())) {
             alert("enter correct data");
-            return
-        }   
+            return;
+        }
         currArray.push(task);    
         modalElement.classList.add('hidden');
         modalElement.classList.remove('flex');
@@ -113,12 +135,12 @@ function displayTasks(tasksArrays,listElements){
         li.addEventListener('click', e=>{
             hideModal(e);
             showDescriptionForm(e);        
-            selectedTaskElement = getTaskObject(+li.dataset.id);
+            selectedTaskElement = getTaskObject(li.dataset.id);
             descriptionForm.querySelector("textarea").value = selectedTaskElement.description;          
         }) 
         li.querySelector('.btn-deletetask').addEventListener('click',e=>{
             e.stopPropagation();
-            const id = +li.dataset.id;
+            const id = li.dataset.id;
             for (const arr of Object.values(tasksArrays)) {
                 const taskIndex = arr.findIndex(el => el?.id === id);
                 if (taskIndex !== -1) {
@@ -212,7 +234,7 @@ zones.forEach(zone => {
         zone.style.backgroundColor = originalColor;
         const dragged = document.querySelector('.is-dragged');
         const list = zone.querySelector('.list');
-        const taskId = +dragged.dataset.id;
+        const taskId = dragged.dataset.id;
         let taskObj;
 
         for (const arr of Object.values(tasksArrays)) {
@@ -228,7 +250,7 @@ zones.forEach(zone => {
         const bottomElement = getBottom(list, e.clientY);
 
         if (bottomElement) {
-            const bottomIndex = destinationList.findIndex(el => el?.id === +bottomElement.getAttribute('id'));
+            const bottomIndex = destinationList.findIndex(el => el?.id === bottomElement.getAttribute('id'));
             destinationList.splice(bottomIndex, 0, taskObj);
             list.insertBefore(dragged, bottomElement);
         } else {
@@ -294,4 +316,3 @@ function getTaskObject(id) {
 
 
 
-displayTasks(tasksArrays,listElements)

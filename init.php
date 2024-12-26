@@ -19,48 +19,39 @@ if (!tableExists($db, 'users')) {
 }
 
 
-if (!tableExists($db, 'kanbans')) {
-    $db->query('
-        CREATE TABLE kanbans (
-            id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-            name TEXT NOT NULL
-        );
-    ');
-}
 
 
-if (!tableExists($db, 'contributions')) {
-    $db->query('
-        CREATE TABLE contributions (
-            id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-            user_id UUID NOT NULL REFERENCES users(id),
-            kanban_id UUID NOT NULL REFERENCES kanbans(id),
-            user_role CHAR(1) CHECK (user_role IN (\'a\', \'c\')) NOT NULL
-        );
-    ');
-}
 
 if (!tableExists($db, 'tasks')) {
     $db->query('
         CREATE TABLE tasks (
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-            name TEXT NOT NULL,
+            title TEXT NOT NULL,
             description TEXT,
-            kanban_id UUID NOT NULL REFERENCES kanbans(id),
+            deadline date not null default CURRENT_DATE,
+            priority int not null default 0,
             status TEXT CHECK (status IN (\'todo\', \'doing\', \'review\', \'done\')) NOT NULL
         );
     ');
+    $db->query("
+    INSERT INTO tasks (title, description,priority,status) VALUES
+        ('Task 1', 'Description for Task 1',0,'todo'),
+        ('Task 2', 'Description for Task 2',1, 'todo'),
+        ('Task 3', 'Description for Task 3',1,'doing'),
+        ('Task 4','Description for Task 4',2, 'review'),
+        ('Task 5','Description for Task 5',2, 'done');
+    ");
 }
 
 
 if (!tableExists($db, 'assignments')) {
-    $db->query('
+    $db->query("
         CREATE TABLE assignments (
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
             user_id UUID NOT NULL REFERENCES users(id),
             task_id UUID NOT NULL REFERENCES tasks(id)
         );
-    ');
+    ");
 }
 
 echo "Database initialization completed.";

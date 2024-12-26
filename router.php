@@ -7,6 +7,6 @@ function abort($code = 404) {
     die();
 }
 
-if($uri === '/kanban') {
+if($uri === '/') {
     $kanban->show();
 }

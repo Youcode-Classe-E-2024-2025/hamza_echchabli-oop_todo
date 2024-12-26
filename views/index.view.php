@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="output.css">
+    <link rel="stylesheet" href="./../output.css">
     <link rel="stylesheet" href="all.min.css">
     <title>Kanban</title>
 </head>
-<body class=" bg-black">
+<body class=" bg-white">
     <main class="relative">
         <h1 class="mx-auto my-7 text-4xl w-fit font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
             Kanban
@@ -97,4 +97,5 @@
 </body>
 
 <script src="display.js"></script>
+<script src="js/getdata.js"></script>
 </html>
