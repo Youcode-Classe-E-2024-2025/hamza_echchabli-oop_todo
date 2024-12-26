@@ -17,15 +17,30 @@ class TasksController {
         // $this->sendResponse(200, $tasks);
         return $tasks;
     }
-    public function addTask($title,$description,$deadline,) {
+    public function addTasks($liste) {
+
+        try {
+            foreach ($liste as  $task) {
+
+                $this->taskDAO->create($task);
+                
+            }
+    
+        } catch (\Throwable $th) {
+            return $th;
+           
+        }
+       return 'success';
+    }
+    
+    public function cleanTable() {
+
+        $this->taskDAO->delete();
 
     }
 
-    // private function sendResponse($status, $data) {
-    //     header("Content-Type: application/json");
-    //     http_response_code($status);
-    //     echo json_encode($data);
-    // }
+
+  
 }
 
 
@@ -54,22 +69,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
 
     if ($task !== null) {
-       
-        $name = $task['name'] ?? 'No name provided';
-        $deadline = $task['deadline'] ?? 'No deadline provided';
-        $description = $task['description'] ?? 'No description provided';
 
+       
+       
+        $controller->cleanTable();
+
+        $res =$controller->addTasks($task);
         
-        $formattedDeadline = date('Y-m-d', strtotime($deadline)); 
+        
         
 
         echo json_encode([
             'status' => 'success',
             'message' => 'Task processed successfully',
             'data' => [
-                'name' => $name,
-                'deadline' => $formattedDeadline,
-                'description' => $description
+                'name' => 'test',
+                'deadline' => 'format',
+                'description' => 'desc'
             ]
         ]);
     } else {

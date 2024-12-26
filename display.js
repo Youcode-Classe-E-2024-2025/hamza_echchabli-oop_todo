@@ -13,7 +13,7 @@ const tasksArrays = {
     done : [],
 }
 
-fetch('http://localhost:8888/controllers/tasksController.php')
+fetch('http://localhost:8000/controllers/tasksController.php')
 .then(response => response.json())
 .then(data =>{
     data.forEach(task=>{
@@ -115,7 +115,7 @@ function createTask(e) {
         modalElement.classList.add('hidden');
         modalElement.classList.remove('flex');
         displayTasks(tasksArrays,listElements); 
-        fetch('http://localhost:8888/controllers/tasksController.php', {
+        fetch('http://localhost:8000/controllers/tasksController.php', {
             method: 'POST', 
             headers: {
               'Content-Type': 'application/json' 
