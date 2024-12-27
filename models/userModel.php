@@ -1,95 +1,73 @@
 <?php
-
-
-
-   class userDao{
+class userDao {
     private $db;
 
     public function __construct($db) {
         $this->db = $db;
     }
 
+    // Register a new user
+    public function register($user) {
+        // Check if email already exists
+        $sql = 'SELECT * FROM users WHERE email = :email';
+        $result = $this->db->query($sql, [':email' => $user['email']]);
+        $existingUser = $result->fetch(PDO::FETCH_ASSOC);
 
-
-
-    public function ifEmailExist($email){
-        $sql = 'SELECT * from users where email = :email';
-        $result = $this->db->query($sql, [':email' => $email]);
-
-        if (!$result) {
-            return false; 
+        if ($existingUser) {
+            $_SESSION['register']='email exists';
+            header('Location: ../views/authentification.php');
+            exit;
+           
         }
-    
-        return $result;
-    }
 
-
-    public function register($user){
-
-         $res = $this->ifEmailExist($user['email']);
-        //  if($res){
-        //     return 'email exist' ; 
-        //  }
-
-
-
-
-        $sql = 'INSERT into users (user_name ,password ,email  ) values (:n , :p ,  :e  )';
-        $result = $this->db->query($sql , [
-         ':n' => $user['name'],
-         ':p' => $user['email'],
-         ':e' => $user['email']
-
-
+        // Insert new user
+        $sql = 'INSERT INTO users (user_name, password, email) VALUES (:n, :p, :e)';
+        $result = $this->db->query($sql, [
+            ':n' => $user['name'],
+            ':p' => password_hash($user['password'], PASSWORD_DEFAULT),
+            ':e' => $user['email']
         ]);
+
         if ($result) {
-            return 'sucess' ;
+            $_SESSION['register']='success';
+            header('Location: ../views/authentification.php');
+            exit;
+           
         } else {
-            return 'false';
+          
+            $_SESSION['register']='failure';
+            header('Location: ../views/authentification.php');
+            exit;
+            
         }
-        
     }
 
-public function loginUser($email, $password) {
-   
-    $user = $this->ifEmailExist($email);
+    // Log in a user
+    public function loginUser($email, $password) {
+        // Check if email exists and fetch user
+        $sql = 'SELECT * FROM users WHERE email = :email';
+        $result = $this->db->query($sql, [':email' => $email]);
+        $user = $result->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user) {
-        return "not exist"; 
-    }
+        if (!$user) {
+           
+            $_SESSION['loginU']='not exis';
+            header('Location: ../views/authentification.php');
+            exit;
+        }
 
-    if (password_verify($password, $user['password'])) {
-        return true; 
-    } else {
-        return "Invalid password"; 
+        // Verify the password
+        if (password_verify($password, $user['password'])) {
+            
+            $_SESSION['loginU']=$user['email'];
+            header('Location: /');
+            exit;
+        } else {
+              $_SESSION['loginU']="Invalid password";
+            header('Location: ../views/authentification.php');
+            exit; 
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   }
-
-
-
-
-
-
-
-
 
 ?>

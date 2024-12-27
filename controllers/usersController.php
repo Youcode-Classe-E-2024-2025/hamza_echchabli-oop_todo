@@ -2,6 +2,8 @@
 require_once '../models/UserModel.php';  
 require_once '../db.php';
 
+session_start();
+
 $userDAO = new UserDAO($db); 
 
 

@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById('login-form').addEventListener('submit', function (event) {
     event.preventDefault();
     const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value.trim();
+    const password = document.getElementById('password').value.trim();
 
    console.log('test email');
    

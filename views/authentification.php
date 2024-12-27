@@ -3,6 +3,11 @@
 <?php
 // Start session at the beginning of the script
 session_start();
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,8 +41,8 @@ session_start();
 
     <div class="container  flex justify-center items-center  ">
        
-        <form id="login-form" action="../controllers/usersController.php" class="space-y-4" method="POST">
-            <h2 class="text-2xl">Login</h2>
+        <form id="login-form" action="../controllers/usersController.php" class="space-y-4" method="GET">
+            <h2 class="text-2xl "><span>   Login</span><span>   result</span></h2>
             <input for="register" name="login" class="hidden">
             <div>
                 <label for="email">Email</label>
@@ -53,7 +58,7 @@ session_start();
             </p>
         </form>
 
-        <form id="register-form" action="../controllers/usersController.php" class="space-y-4 hidden" method="GET">
+        <form id="register-form" action="../controllers/usersController.php" class="space-y-4 hidden" method="POST">
             <h2 class="text-2xl">Register</h2>
             <input for="register" name="register" class="hidden">
             <div>
@@ -78,13 +83,7 @@ session_start();
 
     <?php
     
-    if (isset($_SESSION['res'])) {
-       
-       
-        echo '<script>alert("' . htmlspecialchars($_SESSION['res'], ENT_QUOTES, 'UTF-8') . '");</script>';
-        
     
-    }
     ?>
     <script src="../js/script.js"></script> 
 </body>
