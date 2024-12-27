@@ -106,7 +106,7 @@ function showDescriptionForm(e){
 
 function createTask(e) {
         e.preventDefault();
-        const task = {id:""+Date.now()+Math.trunc(Math.random()*100000),title: modalElement.querySelector(".title").value,deadline:new Date(modalElement.querySelector(".deadline").value),priority:modalElement.querySelector(".priority").value, description:""}
+        const task = {id:crypto.randomUUID(),title: modalElement.querySelector(".title").value,deadline:new Date(modalElement.querySelector(".deadline").value),priority:modalElement.querySelector(".priority").value, description:""}
         if(task.title.length <1 || !isFinite(task.deadline.getTime())) {
             alert("enter correct data");
             return;
@@ -151,9 +151,11 @@ function displayTasks(tasksArrays,listElements){
         })      
         li.addEventListener('click', e=>{
             hideModal(e);
-            showDescriptionForm(e);        
-            selectedTaskElement = getTaskObject(li.dataset.id);
-            descriptionForm.querySelector("textarea").value = selectedTaskElement.description;          
+            // showDescriptionForm(e);        
+            // selectedTaskElement = getTaskObject(li.dataset.id);
+            // descriptionForm.querySelector("textarea").value = selectedTaskElement.description;         
+            location = `/task?id=${li.dataset.id}`
+            
         }) 
         li.querySelector('.btn-deletetask').addEventListener('click',e=>{
             e.stopPropagation();
@@ -353,6 +355,9 @@ function saveToDb() {
     });
     tasks = [...tasks,...val];
     })
+
+  
+    
     fetch('http://localhost:8888/controllers/tasksController.php',
         {
             method : 'POST',
@@ -363,3 +368,4 @@ function saveToDb() {
         }
     )
 }
+

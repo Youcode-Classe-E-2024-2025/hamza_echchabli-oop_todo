@@ -15,8 +15,9 @@ class TaskDAO {
     }
 
     public function create($row) {
-        $sql = "INSERT INTO tasks (title, description, priority, status) VALUES (:title, :description, :priority, :status) RETURNING id";
+        $sql = "INSERT INTO tasks (id,title, description, priority, status) VALUES (:id,:title, :description, :priority, :status) RETURNING id";
         $result = $this->db->query($sql, [
+            ':id' => $row['id'],
             ':title' => $row['title'],
             ':description' => $row['description'],
             ':priority' => $row['priority'],
@@ -61,3 +62,9 @@ class TaskDAO {
         return $tasks;
     }
 }
+
+
+
+
+
+
