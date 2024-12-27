@@ -13,8 +13,9 @@ if (!tableExists($db, 'users')) {
         CREATE TABLE users (
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
             user_name TEXT NOT NULL,
-            email TEXT NOT NULL ,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            email text not null,
+            role char CHECK (role IN (\'a\', \'u\')) not null
         );
     ');
 }
@@ -55,6 +56,6 @@ if (!tableExists($db, 'assignments')) {
     ");
 }
 
-echo "Database initialization completed.";
+
 
 

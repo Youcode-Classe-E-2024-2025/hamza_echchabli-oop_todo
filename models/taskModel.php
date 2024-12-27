@@ -15,8 +15,9 @@ class TaskDAO {
     }
 
     public function create($row) {
-        $sql = "INSERT INTO tasks (title, description, priority, status) VALUES (:title, :description, :priority, :status) RETURNING id";
+        $sql = "INSERT INTO tasks (id,title, description, priority, status) VALUES (:id,:title, :description, :priority, :status) RETURNING id";
         $result = $this->db->query($sql, [
+            ':id' => $row['id'],
             ':title' => $row['title'],
             ':description' => $row['description'],
             ':priority' => $row['priority'],
@@ -60,4 +61,18 @@ class TaskDAO {
         
         return $tasks;
     }
+    public function getOne($id) {
+        $sql1 = "SELECT * FROM tasks where id =:id";
+        $sql2 = "SELECT u.user_name,u.email FROM users u join assignments a on u.id = a.user_id where a.task_id =:id";
+        $task = $this->db->query($sql1,[':id'=>$id])->fetch();
+        $assignees = $this->db->query($sql2,[':id'=>$id])->fetchAll(PDO::FETCH_ASSOC);
+        $task['assignees'] = $assignees;
+        return $task;
+    }
 }
+
+
+
+
+
+
