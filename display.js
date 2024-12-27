@@ -13,7 +13,7 @@ const tasksArrays = {
     done : [],
 }
 
-fetch('http://localhost:8000/controllers/tasksController.php')
+fetch('http://localhost:8888/controllers/tasksController.php')
 .then(response => response.json())
 .then(data =>{
     data.forEach(task=>{
@@ -316,7 +316,6 @@ zones.forEach(zone=>{
         let wantedArray = tasksArrays[list.getAttribute('id')];
         wantedArray.sort((a, b) => a.deadline - b.deadline);
         
-        // Call displayTasks to reflect sorted changes
         displayTasks(tasksArrays, listElements);
     });
 })
