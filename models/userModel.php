@@ -9,6 +9,10 @@
         $this->db = $db;
     }
 
+    public function getAll(){
+        $result = $this->db->query('select * from users')->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
 
 
