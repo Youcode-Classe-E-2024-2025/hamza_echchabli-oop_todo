@@ -5,6 +5,10 @@ class userDao {
     public function __construct($db) {
         $this->db = $db;
     }
+    public function getAll(){
+        $result = $this->db->query('select * from users')->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
     // Register a new user
     public function register($user) {
