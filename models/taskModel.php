@@ -76,6 +76,15 @@ class TaskDAO {
         $task = $this->db->query($sql1,[':id'=>$id])->fetch();
         $assignees = $this->db->query($sql2,[':id'=>$id])->fetchAll(PDO::FETCH_ASSOC);
         $task['assignees'] = $assignees;
+
+
+        // if (!$task) {
+          
+        //     header('Location: /test');
+        //     exit;
+        
+        // }
+    
         
         return $task;
     }

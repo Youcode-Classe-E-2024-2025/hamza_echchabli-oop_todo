@@ -2,7 +2,7 @@
 
 <?php
 // Start session at the beginning of the script
-session_start();
+// session_start();
 
 
 
@@ -28,7 +28,7 @@ session_start();
 
     <header class="">
      
-        <a href="../index.php" class="text-2xl font-bold text-gray-800 hover:text-blue-500">
+        <a href="/" class="logo">
             KanBan
         </a>
 

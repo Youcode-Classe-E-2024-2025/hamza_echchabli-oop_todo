@@ -14,8 +14,24 @@ Class TaskController {
     }
 
     public function getTask() {
+
         $id = $_GET['id'];
+        
+if (!preg_match('/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/', $id)) {
+ 
+    header('Location: /tt');
+    exit;
+    
+}
         $task=$this->taskDAO->getOne($id);
+       
+        if (!$task) {
+ 
+            header('Location: /tt');
+            exit;
+            
+        }
+       
         $users=$this->userDAO->getAll();
 
 
@@ -30,7 +46,7 @@ Class TaskController {
 
         $filteredUsers = array_values($filteredUsers);
   
-
+   
 
         require 'views/task.view.php';
     }

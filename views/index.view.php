@@ -1,5 +1,14 @@
 <?php
+if (!isset($_SESSION['loginU'])) {
+
+    header('Location: /auth');
+    exit;
+    
+}
+
+// echo $_SESSION['loginU'][0];
 require_once('views/partials/header.php');
+
 ?>
     <nav class="w-full text-white bg-gray-700 flex justify-between relative">
     <div class="prj-cnt">

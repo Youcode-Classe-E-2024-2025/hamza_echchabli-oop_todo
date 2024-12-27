@@ -1,4 +1,5 @@
 <?php
+
 class userDao {
     private $db;
 
@@ -12,6 +13,7 @@ class userDao {
 
     // Register a new user
     public function register($user) {
+        session_start();
         // Check if email already exists
         $sql = 'SELECT * FROM users WHERE email = :email';
         $result = $this->db->query($sql, [':email' => $user['email']]);
@@ -19,28 +21,29 @@ class userDao {
 
         if ($existingUser) {
             $_SESSION['register']='email exists';
-            header('Location: ../views/authentification.php');
+            header('Location: /auth');
             exit;
            
         }
 
         // Insert new user
-        $sql = 'INSERT INTO users (user_name, password, email) VALUES (:n, :p, :e)';
+        $sql = 'INSERT INTO users (user_name, password, email ,role) VALUES (:n, :p, :e ,:r)';
         $result = $this->db->query($sql, [
             ':n' => $user['name'],
             ':p' => password_hash($user['password'], PASSWORD_DEFAULT),
-            ':e' => $user['email']
+            ':e' => $user['email'],
+            ':r' =>'u',
         ]);
 
         if ($result) {
             $_SESSION['register']='success';
-            header('Location: ../views/authentification.php');
+            header('Location: /auth');
             exit;
            
         } else {
           
             $_SESSION['register']='failure';
-            header('Location: ../views/authentification.php');
+            header('Location: /auth');
             exit;
             
         }
@@ -48,6 +51,7 @@ class userDao {
 
     // Log in a user
     public function loginUser($email, $password) {
+        session_start();
         // Check if email exists and fetch user
         $sql = 'SELECT * FROM users WHERE email = :email';
         $result = $this->db->query($sql, [':email' => $email]);
@@ -55,20 +59,21 @@ class userDao {
 
         if (!$user) {
            
-            $_SESSION['loginU']='not exis';
-            header('Location: ../views/authentification.php');
+            $_SESSION['login']='not exis';
+            header('Location: /auth');
             exit;
         }
 
         // Verify the password
         if (password_verify($password, $user['password'])) {
             
-            $_SESSION['loginU']=$user['email'];
+            $_SESSION['loginU']=[$user['id'],$user['role']];
+            
             header('Location: /');
             exit;
         } else {
-              $_SESSION['loginU']="Invalid password";
-            header('Location: ../views/authentification.php');
+              $_SESSION['login']="Invalid password";
+            header('Location: /auth');
             exit; 
         }
     }
