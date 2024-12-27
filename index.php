@@ -1,4 +1,6 @@
 <?php
+
+
 require_once "db.php";
 require_once "init.php";
 session_start();
