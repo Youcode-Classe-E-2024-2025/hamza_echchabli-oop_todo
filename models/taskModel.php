@@ -61,6 +61,14 @@ class TaskDAO {
         
         return $tasks;
     }
+    public function getOne($id) {
+        $sql1 = "SELECT * FROM tasks where id =:id";
+        $sql2 = "SELECT u.user_name,u.email FROM users u join assignments a on u.id = a.user_id where a.task_id =:id";
+        $task = $this->db->query($sql1,[':id'=>$id])->fetch();
+        $assignees = $this->db->query($sql2,[':id'=>$id])->fetchAll(PDO::FETCH_ASSOC);
+        $task['assignees'] = $assignees;
+        return $task;
+    }
 }
 
 

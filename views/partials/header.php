@@ -7,4 +7,4 @@
     <link rel="stylesheet" href="all.min.css">
     <title>Kanban</title>
 </head>
-<body class=" bg-black">
+<body class=" bg-white">

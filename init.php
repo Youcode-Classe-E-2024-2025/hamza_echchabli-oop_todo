@@ -13,7 +13,8 @@ if (!tableExists($db, 'users')) {
         CREATE TABLE users (
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
             user_name TEXT NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            email text not null
         );
     ');
 }

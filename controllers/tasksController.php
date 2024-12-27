@@ -1,6 +1,6 @@
 <?php
 
-require_once '../models/TaskModel.php';
+require_once '../models/taskModel.php';
 require_once '../db.php';
 
 class TasksController {
