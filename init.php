@@ -14,7 +14,8 @@ if (!tableExists($db, 'users')) {
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
             user_name TEXT NOT NULL,
             password TEXT NOT NULL,
-            email text not null
+            email text not null,
+            role char CHECK (role IN (\'a\', \'u\')) not null
         );
     ');
 }
