@@ -354,9 +354,6 @@ function saveToDb() {
     });
     tasks = [...tasks,...val];
     })
-
-  
-    
     fetch('http://localhost:8888/controllers/tasksController.php',
         {
             method : 'POST',

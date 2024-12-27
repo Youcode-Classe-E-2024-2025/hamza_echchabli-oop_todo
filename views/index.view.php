@@ -11,7 +11,7 @@ require_once('views/partials/header.php');
     
     <p class="py-1 px-2 font-extralight text-gray-400">Don't forget to save (ctrl+s)</p>
     </nav>
-    <p class="absolute top-0 left-1/2 translate-x-[-50%] py-1 px-2 font-extralight text-green-400 text-center">saved</p>
+
     <main class="relative">
         <!-- <h1 class="mx-auto my-7 text-4xl w-fit font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
             Kanban

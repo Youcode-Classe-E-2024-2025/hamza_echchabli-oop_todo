@@ -60,14 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] =='GET') {
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
     $inputData = file_get_contents('php://input');
-
-    
     $task = json_decode($inputData, true); 
 
     
-
     if ($task !== null) {
 
        
