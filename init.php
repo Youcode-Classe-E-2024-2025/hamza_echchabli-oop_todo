@@ -54,6 +54,6 @@ if (!tableExists($db, 'assignments')) {
     ");
 }
 
-echo "Database initialization completed.";
+
 
 

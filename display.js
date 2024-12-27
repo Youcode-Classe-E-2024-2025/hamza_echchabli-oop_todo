@@ -13,7 +13,7 @@ const tasksArrays = {
     done : [],
 }
 
-fetch('http://localhost:8000/controllers/tasksController.php')
+fetch('http://localhost:8888/controllers/tasksController.php')
 .then(response => response.json())
 .then(data =>{
     data.forEach(task=>{
@@ -334,7 +334,16 @@ function getTaskObject(id) {
 
 
 
-document.querySelector('.btn-save-tasks').addEventListener('click',e=>{
+document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault(); 
+        saveToDb(); 
+    }
+});
+
+document.querySelector('.btn-save-tasks').addEventListener('click',saveToDb)
+
+function saveToDb() {
     let tasks=[];
     const tasksArraysCopy = JSON.parse(JSON.stringify(tasksArrays));
     Object.entries(tasksArraysCopy).forEach(([key,val])=>{
@@ -353,8 +362,4 @@ document.querySelector('.btn-save-tasks').addEventListener('click',e=>{
             body: JSON.stringify(tasks)
         }
     )
-    
-    
-    
-    
-})
+}

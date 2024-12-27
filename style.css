@@ -6,9 +6,6 @@
     color: white;   
    }
    
-   
-   
-   
    .flex-container {
        display: flex;
        width: 300px; /* Fixed width for the container */
@@ -62,4 +59,15 @@
 
 .hoveredzone {
     background-color: #595959 !important;
+}
+
+
+.prj-list  {
+    visibility: hidden;
+    opacity: 0;
+    transition: all;
+}
+.prj-cnt:hover  .prj-list {
+    visibility: visible;
+    opacity: 1;
 }

@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="output.css">
-    <link rel="stylesheet" href="all.min.css">
-    <title>Kanban</title>
-</head>
-<body class=" bg-black">
+<?php
+require_once('views/partials/header.php');
+?>
+    <nav class="w-full text-white bg-gray-700 flex justify-between relative">
+    <div class="prj-cnt">
+    <button class="btn-prj  py-1 px-2 font-extralight text-gray-400 hover:text-white transition-colors">project</button>
+    <ul class="prj-list absolute top-full left-0 ">
+        <li><button class="btn-save-tasks font-extralight text-gray-400 hover:text-white transition-colors pl-2  bg-gray-500 w-44 text-start">save (ctrl+s)</button></li>
+    </ul>
+    </div>
+    
+    <p class="py-1 px-2 font-extralight text-gray-400">Don't forget to save (ctrl+s)</p>
+    </nav>
+    <p class="absolute top-0 left-1/2 translate-x-[-50%] py-1 px-2 font-extralight text-green-400 text-center">saved</p>
     <main class="relative">
-        <h1 class="mx-auto my-7 text-4xl w-fit font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
+        <!-- <h1 class="mx-auto my-7 text-4xl w-fit font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
             Kanban
-        </h1>
-        <button class="btn-save-tasks text-white">save</button>
-        <div class="cnt min-w-[400px]  w-[96%] lg:w-[1024px]    mx-auto mt-10 mb-28  overflow-x-auto p-3">
+        </h1> -->
+        <div class="cnt min-w-[400px]  w-[96%] lg:w-[1024px]  mx-auto mt-20 mb-28  overflow-x-auto p-3">
             <div class="content flex items-start  gap-3 ">
                <div class="relative transition-all list-container mx-auto basis-72 min-w-60 bg-[#262626] rounded flex flex-col gap-5 p-3">
                 <div class="flex flex-col absolute right-0 top-0 text-white text-sm gap-1 p-1">
