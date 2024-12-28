@@ -10,7 +10,7 @@ class Database {
         return $statement;
     }
 }
-$dsn =  'pgsql:host=localhost;port=8885;dbname=tododb;user=postgres;password=0000;';
+$dsn =  'pgsql:host=localhost;port=5432;dbname=t2;user=postgres;password=hamza;';
 
 
 $db = new Database($dsn);

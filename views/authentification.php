@@ -1,8 +1,7 @@
 
 
 <?php
-// Start session at the beginning of the script
-// session_start();
+
 
 
 
@@ -26,20 +25,25 @@
 </head>
 <body class="bg-gray-100">
 
-    <header class="">
      
-        <a href="/" class="logo">
-            KanBan
-        </a>
+    <nav class="w-full text-white bg-gray-700 flex justify-center relative">
+   
+    <strong>log in </strong>
+  
+    
+    </nav>
+ <?php
+        if (isset($_SESSION['login'])){
 
-        <div>
-            <a href="../pages/authentificationPage.php" class=" mr-auto px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
-                Log In
-            </a>
-        </div>
-    </header>
+           echo' <label class="alertS"> '.$_SESSION['login'].'</label>';
 
-    <div class="container  flex justify-center items-center  ">
+            
+        }
+    
+    
+    ?>
+
+    <div class="container  flex justify-center items-center  "id="formMT">
        
         <form id="login-form" action="../controllers/usersController.php" class="space-y-4" method="GET">
             <h2 class="text-2xl "><span>   Login</span><span>   result</span></h2>
@@ -79,12 +83,10 @@
                 Already have an account? <a href="#" id="show-login">Go to Login</a>
             </p>
         </form>
+       
     </div>
 
-    <?php
     
-    
-    ?>
     <script src="../js/script.js"></script> 
 </body>
 </html>

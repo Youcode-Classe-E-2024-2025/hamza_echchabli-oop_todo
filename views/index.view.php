@@ -18,13 +18,13 @@ require_once('views/partials/header.php');
     </ul>
     </div>
     
-    <p class="py-1 px-2 font-extralight text-gray-400">Don't forget to save (ctrl+s)</p>
+    <p class="py-1 px-2 font-extralight text-gray-400"><a href="../controllers/logout.php">log out</a></p>
     </nav>
 
     <main class="relative">
-        <!-- <h1 class="mx-auto my-7 text-4xl w-fit font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
+        <h1 class="mx-auto my-7 text-4xl w-fit font-extrabold bg-gradient-to-r from-orange-500 to-purple-500 bg-clip-text text-transparent">
             Kanban
-        </h1> -->
+        </h1>
         <div class="cnt min-w-[400px]  w-[96%] lg:w-[1024px]  mx-auto mt-20 mb-28  overflow-x-auto p-3">
             <div class="content flex items-start  gap-3 ">
                <div class="relative transition-all list-container mx-auto basis-72 min-w-60 bg-[#262626] rounded flex flex-col gap-5 p-3">

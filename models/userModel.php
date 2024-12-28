@@ -59,7 +59,7 @@ class userDao {
 
         if (!$user) {
            
-            $_SESSION['login']='not exis';
+            $_SESSION['login']="email doesn't exist";
             header('Location: /auth');
             exit;
         }

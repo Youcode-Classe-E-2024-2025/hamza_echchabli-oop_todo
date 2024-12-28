@@ -18,6 +18,11 @@ if (!tableExists($db, 'users')) {
             role char CHECK (role IN (\'a\', \'u\')) not null
         );
     ');
+    $db->query("
+    INSERT INTO users (user_name,password, email,role) VALUES
+        ('admin', '$2b$12$3KP.bWz3Wmn5HWMdd02flu62noHCZ.3YcGG3ozYSO74hyCmPNHbTy','admin@gmail.com','a');
+       
+    ");
 }
 
 
@@ -50,8 +55,8 @@ if (!tableExists($db, 'assignments')) {
     $db->query("
         CREATE TABLE assignments (
             id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-            user_id UUID NOT NULL REFERENCES users(id),
-            task_id UUID NOT NULL REFERENCES tasks(id)
+            user_id UUID NOT NULL ,
+            task_id UUID NOT NULL 
         );
     ");
 }
